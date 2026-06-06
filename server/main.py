@@ -125,6 +125,7 @@ async def oauth_callback(request: Request, code: str = "", state: str = "", erro
         # Discord Bot に Webhook 通知
         webhook_headers = {
             "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "true",  # ← この行を追加
         }
         if WEBHOOK_SECRET:
             webhook_headers["X-Webhook-Secret"] = WEBHOOK_SECRET
