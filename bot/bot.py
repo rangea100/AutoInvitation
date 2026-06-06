@@ -346,17 +346,22 @@ async def start_webhook_server():
 @bot.event
 async def on_ready():
     await start_webhook_server()
-    # Persistent View を再登録（Bot再起動後もボタンが機能するように）
     bot.add_view(AuthView())
 
-    # 既存の承認待ちレコードから ApprovalView を復元
     pending = db.get_all_pending()
     for discord_id in pending:
         bot.add_view(ApprovalView(discord_id))
 
-    await bot.tree.sync()
-    print(f"[INFO] Botログイン完了: {bot.user} (id={bot.user.id})")
+    guild = discord.Object(id=1508479444879151304)
 
+    # コマンドをguildにコピーしてから同期
+    bot.tree.copy_global_to(guild=guild)
+    synced = await bot.tree.sync(guild=guild)
+
+    print(f"[INFO] 同期したコマンド数: {len(synced)}")
+    for cmd in synced:
+        print(f"  - /{cmd.name}")
+    print(f"[INFO] Botログイン完了: {bot.user} (id={bot.user.id})")
 
 # ─────────────────────────────────────────
 #  エントリーポイント
