@@ -1,0 +1,11 @@
+[project]
+name = "discord-github-oauth-server"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.111.0",
+    "httpx==0.27.0",
+]
+
+[tool.vercel]
+entrypoint = "server/main.py"
