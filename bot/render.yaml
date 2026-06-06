@@ -1,0 +1,24 @@
+services:
+  - type: worker
+    name: discord-github-bot
+    runtime: python
+    rootDir: bot
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: ADMIN_CHANNEL_ID
+        sync: false
+      - key: GITHUB_ORG
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: OAUTH_SERVER_URL
+        sync: false
+      - key: DISCORD_BOT_WEBHOOK
+        sync: false
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: WEBHOOK_PORT
+        value: 8081
